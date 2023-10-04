@@ -19,84 +19,109 @@ int main(void) {
 
     /*SELECIONANDO A POSICAO DOS NAVIOS*/
 
-    /*quantidade / tamanho*/
-    int navio5[2] = {1, 5};
+    /*quantidade / tamanho de navios*/
+    int navio[5][2] = {
+        {1, 5},
+        {1, 4},
+        {1, 3},
+        {1, 2},
+        {1, 1}
+    };
+    
 
     srand(time(NULL));
-    int x = rand() % 10;
-    int y = rand() % 10;
-
-    /*0 horizontal / 1 vertical*/
-    int horizontalVertical = rand() % 2;
-    //horizontalVertical = 0;
+    int x;
+    int y;
+    int horizontalVertical;
     
-    printf("\n%i %i %i\n\n", x, y, horizontalVertical);
+    int tipoNavio, numNavio;
 
-    /*verifica se o navio cabe na matriz e se nao esta sobrepondo outros navios*/
+    for(tipoNavio = 0; tipoNavio < 5; tipoNavio++) {
+        for(numNavio = 0; numNavio < navio[tipoNavio][0]; numNavio++) {
+            x = rand() % 10;
+            y = rand() % 10;
+            /*0 horizontal / 1 vertical*/
+            horizontalVertical = rand() % 2;
+            //horizontalVertical = 0;
+            
+            printf("\n%i %i %i\n\n", x, y, horizontalVertical);
 
-    int taSobrepondo = 0;
+            /*verifica se o navio cabe na matriz e se nao esta sobrepondo outros navios*/
 
-    switch (horizontalVertical) {
-        case 0: //Horizontal
-            while (1) {
-                taSobrepondo = 0;
-                if (navio5[1] + y < 10) {
-                    for(i = 0; i < navio5[1]; i++) {
-                        taSobrepondo = matriz_padrao[x][i + y] == 1;
-                    }
-                    if (taSobrepondo == 0) {
-                        for(i = 0; i < navio5[1]; i++) {
-                            matriz_padrao[x][i + y] = 1;
+            int taSobrepondo = 0;
+
+            switch (horizontalVertical) {
+                case 0: //Horizontal
+                    while (1) {
+                        taSobrepondo = 0;
+                        if (navio[tipoNavio][1] + y < 10) {
+                            for(i = 0; i < navio[tipoNavio][1]; i++) {
+                                if(matriz_padrao[x][i + y] == 1) {
+                                    taSobrepondo = 1;
+                                }
+                            }
+                            if (taSobrepondo == 0) {
+                                for(i = 0; i < navio[tipoNavio][1]; i++) {
+                                    matriz_padrao[x][i + y] = 1;
+                                }
+                                break;
+                            } else {
+                                x = rand() % 10;
+                                y = rand() % 10;
+                                horizontalVertical = rand() % 2;
+                            }
+                        } else {
+                            x = rand() % 10;
+                            y = rand() % 10;
+                            horizontalVertical = rand() % 2;
                         }
-                        break;
-                    } else {
-                        x = rand() % 10;
-                        y = rand() % 10;
                     }
-                } else {
-                    x = rand() % 10;
-                    y = rand() % 10;
-                }
-            }
-            taSobrepondo = 0;
-        break;
+                    taSobrepondo = 0;
+                break;
 
-        case 1: //Vertical
-            while (1) {
-                taSobrepondo = 0;
-                if (navio5[1] + x < 10) {
-                    for(j = 0; j < navio5[1]; j++) {
-                        taSobrepondo = matriz_padrao[j + x][y] == 1;
-                    }
-                    if (taSobrepondo == 0) {
-                        for(j = 0; j < navio5[1]; j++) {
-                            matriz_padrao[j + x][y] = 1;
+                case 1: //Vertical
+                    while (1) {
+                        taSobrepondo = 0;
+                        if (navio[tipoNavio][1] + x < 10) {
+                            for(j = 0; j < navio[tipoNavio][1]; j++) {
+                                if(matriz_padrao[j + x][y] == 1) {
+                                    taSobrepondo = 1;
+                                }
+                            }
+                            if (taSobrepondo == 0) {
+                                for(j = 0; j < navio[tipoNavio][1]; j++) {
+                                    matriz_padrao[j + x][y] = 1;
+                                }
+                                break;
+                            } else {
+                                x = rand() % 10;
+                                y = rand() % 10;
+                                horizontalVertical = rand() % 2;
+                            }
+                        } else {
+                            x = rand() % 10;
+                            y = rand() % 10;
+                            horizontalVertical = rand() % 2;
                         }
-                        break;
-                    } else {
-                        x = rand() % 10;
-                        y = rand() % 10;
                     }
-                } else {
-                    x = rand() % 10;
-                    y = rand() % 10;
-                }
-            }
-            taSobrepondo = 0;
-        break;
+                    taSobrepondo = 0;
+                break;
 
-        default:
-        printf("Erro no switch case");
+                default:
+                printf("Erro no switch case");
+            }
+
+            for(i = 0; i < 10; i++) {
+                for(j = 0; j < 10; j++) {
+                    printf("%i  ", matriz_padrao[i][j]);
+                }
+                printf("\n");   
+            }
+
+        }   
+        printf("\n");
     }
 
-    // matriz_padrao[x][y] = 1;
-
-    for(i = 0; i < 10; i++) {
-        for(j = 0; j < 10; j++) {
-            printf("%i  ", matriz_padrao[i][j]);
-        }
-        printf("\n");   
-    }
 
 
     return 0;
