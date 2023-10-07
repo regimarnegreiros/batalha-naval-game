@@ -34,7 +34,8 @@ int main(void) {
     int y;
     int horizontalVertical;
     
-    int tipoNavio, numNavio;
+    int tipoNavio, numNavio, numDoNavio;
+    numDoNavio = 0;
 
     for(tipoNavio = 0; tipoNavio < 5; tipoNavio++) {
         for(numNavio = 0; numNavio < navio[tipoNavio][0]; numNavio++) {
@@ -56,13 +57,14 @@ int main(void) {
                         taSobrepondo = 0;
                         if (navio[tipoNavio][1] + y < 10) {
                             for(i = 0; i < navio[tipoNavio][1]; i++) {
-                                if(matriz_padrao[x][i + y] == 1) {
+                                if(matriz_padrao[x][i + y] >= 1) {
                                     taSobrepondo = 1;
                                 }
                             }
                             if (taSobrepondo == 0) {
+                                numDoNavio++;
                                 for(i = 0; i < navio[tipoNavio][1]; i++) {
-                                    matriz_padrao[x][i + y] = 1;
+                                    matriz_padrao[x][i + y] = numDoNavio;
                                 }
                                 break;
                             } else {
@@ -84,13 +86,14 @@ int main(void) {
                         taSobrepondo = 0;
                         if (navio[tipoNavio][1] + x < 10) {
                             for(j = 0; j < navio[tipoNavio][1]; j++) {
-                                if(matriz_padrao[j + x][y] == 1) {
+                                if(matriz_padrao[j + x][y] >= 1) {
                                     taSobrepondo = 1;
                                 }
                             }
                             if (taSobrepondo == 0) {
+                                numDoNavio++;
                                 for(j = 0; j < navio[tipoNavio][1]; j++) {
-                                    matriz_padrao[j + x][y] = 1;
+                                    matriz_padrao[j + x][y] = numDoNavio;
                                 }
                                 break;
                             } else {
@@ -120,6 +123,7 @@ int main(void) {
 
         }   
         printf("\n");
+        printf("%i", numDoNavio);
     }
 
 
