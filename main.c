@@ -127,7 +127,16 @@ int main(void) {
     // printf("%i", numDoNavio);
     
     char linha;
-    int linhaInt, coluna, digitouCorreto;
+    int linhaInt, coluna, digitouCorreto, k, temTodosOsNaviosAinda;
+    char matriz_escondida[10][10];
+
+    for(i = 0; i < 10; i++) {
+        for(j = 0; j < 10; j++) {
+            matriz_escondida[i][j] = 'S';
+            printf("%c  ", matriz_escondida[i][j]);
+        }
+        printf("\n");
+    }
 
     while(1) {
         /*RECOLHE A CORDENADA DIGITADA PELO USUARIO*/
@@ -148,6 +157,12 @@ int main(void) {
             }
         }
 
+        if (matriz_padrao[linhaInt][coluna] == 0) {
+            matriz_escondida[linhaInt][coluna] = 'O';
+        } else {
+            matriz_escondida[linhaInt][coluna] = '#';
+        }
+
         matriz_padrao[linhaInt][coluna] = 0;
 
         for(i = 0; i < 10; i++) {
@@ -157,7 +172,34 @@ int main(void) {
             printf("\n");   
         }
         printf("\n");
+
+        for(i = 0; i < 10; i++) {
+            for(j = 0; j < 10; j++) {
+                printf("%c  ", matriz_escondida[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+
+        for (k = 1; k <= numDoNavio; k++) {
+            temTodosOsNaviosAinda = 0;
+            for(i = 0; i < 10; i++) {
+                for(j = 0; j < 10; j++) {
+                    if (matriz_padrao[i][j] == k) {
+                        temTodosOsNaviosAinda = 1;
+                    }
+                }
+            }
+            if (temTodosOsNaviosAinda == 0) {
+                break;
+            }
+        }
+        if (temTodosOsNaviosAinda == 0) {
+            break;
+        }
     }
+
+    printf("Voce ganhou");
 
     return 0;
 }
