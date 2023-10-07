@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 int main(void) {
 
@@ -45,7 +46,7 @@ int main(void) {
             horizontalVertical = rand() % 2;
             //horizontalVertical = 0;
             
-            printf("\n%i %i %i\n\n", x, y, horizontalVertical);
+            // printf("\n%i %i %i\n\n", x, y, horizontalVertical);
 
             /*verifica se o navio cabe na matriz e se nao esta sobrepondo outros navios*/
 
@@ -113,20 +114,50 @@ int main(void) {
                 default:
                 printf("Erro no switch case");
             }
-
-            for(i = 0; i < 10; i++) {
-                for(j = 0; j < 10; j++) {
-                    printf("%i  ", matriz_padrao[i][j]);
-                }
-                printf("\n");   
-            }
-
         }   
-        printf("\n");
-        printf("%i", numDoNavio);
     }
 
+    for(i = 0; i < 10; i++) {
+        for(j = 0; j < 10; j++) {
+            printf("%i  ", matriz_padrao[i][j]);
+        }
+        printf("\n");   
+    }
+    printf("\n");
+    // printf("%i", numDoNavio);
+    
+    char linha;
+    int linhaInt, coluna, digitouCorreto;
 
+    while(1) {
+        /*RECOLHE A CORDENADA DIGITADA PELO USUARIO*/
+        digitouCorreto = 0;
+        while(digitouCorreto == 0) {
+            printf("Insira uma letra de A a J e um numero de 0 a 9 (Ex: a1 ou A1):\n");
+            scanf(" %c%i", &linha, &coluna);
+
+            linha = tolower(linha);
+            linhaInt = linha - 'a';
+
+            if (linhaInt >= 0 && linhaInt <= 9 && coluna >= 0 && coluna <= 9) {
+                printf("\nVoce digitou corretamente\n\n");
+                digitouCorreto = 1;
+            } else {
+                printf("\nVOCE DIGITOU INCORRETAMENTE!\n\n");
+                while (getchar() != '\n');
+            }
+        }
+
+        matriz_padrao[linhaInt][coluna] = 0;
+
+        for(i = 0; i < 10; i++) {
+            for(j = 0; j < 10; j++) {
+                printf("%i  ", matriz_padrao[i][j]);
+            }
+            printf("\n");   
+        }
+        printf("\n");
+    }
 
     return 0;
 }
