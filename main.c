@@ -7,7 +7,8 @@ int main(void) {
     char jogarNovamente;
     do {
         /*MENU*/
-        int dificuldade, qNavio5, qNavio4, qNavio3, qNavio2, qNavio1, tentativas;
+        int dificuldade, tentativas;
+        int qNavio[5];
         int menu = 0;
         while (menu == 0) {
             printf("\nBem-vindo ao jogo de batalha naval!\n\n");
@@ -17,33 +18,33 @@ int main(void) {
             switch (dificuldade) {
                 case 1: // facil
                     printf("\nVoce selecionou a dificuldade facil!\n\n");
-                    qNavio5 = 3;
-                    qNavio4 = 3;
-                    qNavio3 = 3;
-                    qNavio2 = 3;
-                    qNavio1 = 3;
+                    qNavio[4] = 3;
+                    qNavio[3] = 3;
+                    qNavio[2] = 3;
+                    qNavio[1] = 3;
+                    qNavio[0] = 3;
                     tentativas = 9;
 
                     menu = 1;
                     break;
                 case 2: // medio
                     printf("\nVoce selecionou a dificuldade media!\n\n");
-                    qNavio5 = 2;
-                    qNavio4 = 2;
-                    qNavio3 = 2;
-                    qNavio2 = 2;
-                    qNavio1 = 2;
+                    qNavio[4] = 2;
+                    qNavio[3] = 2;
+                    qNavio[2] = 2;
+                    qNavio[1] = 2;
+                    qNavio[0] = 2;
                     tentativas = 6;
                     
                     menu = 1;
                     break;
                 case 3: // dificil
                     printf("\nVoce selecionou a dificuldade DIFICIL!\n\n");
-                    qNavio5 = 1;
-                    qNavio4 = 1;
-                    qNavio3 = 1;
-                    qNavio2 = 1;
-                    qNavio1 = 1;
+                    qNavio[4] = 1;
+                    qNavio[3] = 1;
+                    qNavio[2] = 1;
+                    qNavio[1] = 1;
+                    qNavio[0] = 1;
                     tentativas = 3;
                     
                     menu = 1;
@@ -72,11 +73,11 @@ int main(void) {
 
         /*quantidade / tamanho de navios*/
         int navio[5][2] = {
-            {qNavio5, 5},
-            {qNavio4, 4},
-            {qNavio3, 3},
-            {qNavio2, 2},
-            {qNavio1, 1}
+            {qNavio[4], 5},
+            {qNavio[3], 4},
+            {qNavio[2], 3},
+            {qNavio[1], 2},
+            {qNavio[0], 1}
         };
         
 
