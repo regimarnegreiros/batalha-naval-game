@@ -64,9 +64,7 @@ int main(void) {
         for(i = 0; i < 10; i++) {
             for(j = 0; j < 10; j++) {
                 matriz_padrao[i][j] = 0;
-                // printf("%i ", matriz_padrao[i][j]);
-            }
-            // printf("\n");   
+            } 
         }
 
         /*SELECIONANDO A POSICAO DOS NAVIOS*/
@@ -95,9 +93,7 @@ int main(void) {
                 y = rand() % 10;
                 /*0 horizontal / 1 vertical*/
                 horizontalVertical = rand() % 2;
-                //horizontalVertical = 0;
-                
-                // printf("\n%i %i %i\n\n", x, y, horizontalVertical);
+
 
                 /*verifica se o navio cabe na matriz e se nao esta sobrepondo outros navios*/
 
@@ -168,33 +164,38 @@ int main(void) {
         }
 
         /*
-        printf("\n   ");
+        printf(" ");
         for(i = 0; i < 10; i++) {
             for(j = 0; j < 10; j++) {
-                printf("%i  ", matriz_padrao[i][j]);
+                printf("%3i", matriz_padrao[i][j]);
             }
-            printf("\n   ");   
+            printf("\n ");   
         }
         printf("\n");
         */
-        // printf("%i", numDoNavio);
         
         char linha;
         int linhaInt, coluna, digitouCorreto, k, temTodosOsNaviosAinda;
         char matriz_escondida[10][10];
-
-        printf("   0  1  2  3  4  5  6  7  8  9\n");
+        
+        /*CRIA A MATRIZ ESCONDIDA*/
         for(i = 0; i < 10; i++) {
-            printf("%c  ", i + 65);
             for(j = 0; j < 10; j++) {
                 matriz_escondida[i][j] = '*';
-                printf("%c  ", matriz_escondida[i][j]);
             }
-            printf("\n");
         }
-        printf("\nRestam %i tentativas\n\n", tentativas);
 
         while(tentativas > 0) {
+            printf("   0  1  2  3  4  5  6  7  8  9\n");
+            for(i = 0; i < 10; i++) {
+                printf("%c  ", i + 65);
+                for(j = 0; j < 10; j++) {
+                    printf("%c  ", matriz_escondida[i][j]);
+                }
+                printf("\n");
+            }
+            printf("\nRestam %i tentativas\n\n", tentativas);
+            
             /*RECOLHE A CORDENADA DIGITADA PELO USUARIO*/
             digitouCorreto = 0;
             while(digitouCorreto == 0) {
@@ -229,27 +230,6 @@ int main(void) {
 
             /*SUBSTITUI A POSICAO QUE O USUARIO DIGITOU POR 0*/
             matriz_padrao[linhaInt][coluna] = 0;
-
-            /*
-            printf("   ");
-            for(i = 0; i < 10; i++) {
-                for(j = 0; j < 10; j++) {
-                    printf("%i  ", matriz_padrao[i][j]);
-                }
-                printf("\n   ");   
-            }
-            printf("\n");
-            */
-
-            printf("   0  1  2  3  4  5  6  7  8  9\n");
-            for(i = 0; i < 10; i++) {
-                printf("%c  ", i + 65);
-                for(j = 0; j < 10; j++) {
-                    printf("%c  ", matriz_escondida[i][j]);
-                }
-                printf("\n");
-            }
-            printf("\nRestam %i tentativas\n\n", tentativas);
 
             /*VERIFICA SE UM NAVIO FOI COMPLETAMENTE ELIMINADO*/
             for (k = 1; k <= numDoNavio; k++) {
