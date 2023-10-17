@@ -67,6 +67,14 @@ int main(void) {
             } 
         }
 
+        char matriz_navios[10][10];
+
+        for(i = 0; i < 10; i++) {
+            for(j = 0; j < 10; j++) {
+                matriz_navios[i][j] = '~';
+            } 
+        }
+
         /*SELECIONANDO A POSICAO DOS NAVIOS*/
 
         /*quantidade / tamanho de navios*/
@@ -113,6 +121,15 @@ int main(void) {
                                     numDoNavio++;
                                     for(i = 0; i < navio[tipoNavio][1]; i++) {
                                         matriz_padrao[x][i + y] = numDoNavio;
+                                        if (i == 0 && 1+i == navio[tipoNavio][1]) {
+                                            matriz_navios[x][y] = 'X';
+                                        } else if (i == 0) {
+                                            matriz_navios[x][y] = '<';
+                                        } else if (1+i == navio[tipoNavio][1]) {
+                                            matriz_navios[x][i + y] = '>';
+                                        } else {
+                                            matriz_navios[x][i + y] = '-';
+                                        }
                                     }
                                     break;
                                 } else {
@@ -142,6 +159,15 @@ int main(void) {
                                     numDoNavio++;
                                     for(j = 0; j < navio[tipoNavio][1]; j++) {
                                         matriz_padrao[j + x][y] = numDoNavio;
+                                        if (j == 0 && 1+j == navio[tipoNavio][1]) {
+                                            matriz_navios[x][y] = 'X';
+                                        } else if (j == 0) {
+                                            matriz_navios[x][y] = '^';
+                                        } else if (1+j == navio[tipoNavio][1]) {
+                                            matriz_navios[j + x][y] = 'v';
+                                        } else {
+                                            matriz_navios[j + x][y] = '|';
+                                        }
                                     }
                                     break;
                                 } else {
@@ -164,6 +190,7 @@ int main(void) {
         }
 
         /*
+        */
         printf(" ");
         for(i = 0; i < 10; i++) {
             for(j = 0; j < 10; j++) {
@@ -172,8 +199,16 @@ int main(void) {
             printf("\n ");   
         }
         printf("\n");
-        */
-        
+
+        printf(" ");
+        for(i = 0; i < 10; i++) {
+            for(j = 0; j < 10; j++) {
+                printf("  %c", matriz_navios[i][j]);
+            }
+            printf("\n ");
+        }
+        printf("\n");
+
         char linha;
         int linhaInt, coluna, digitouCorreto, k, temTodosOsNaviosAinda;
         char matriz_escondida[10][10];
@@ -181,7 +216,7 @@ int main(void) {
         /*CRIA A MATRIZ ESCONDIDA*/
         for(i = 0; i < 10; i++) {
             for(j = 0; j < 10; j++) {
-                matriz_escondida[i][j] = '*';
+                matriz_escondida[i][j] = '.';
             }
         }
 
@@ -208,7 +243,7 @@ int main(void) {
 
                 if (linhaInt >= 0 && linhaInt <= 9 && coluna >= 0 && coluna <= 9) {
                     // printf("\nVoce digitou corretamente\n\n");
-                    if (matriz_escondida[linhaInt][coluna] != 'O' && matriz_escondida[linhaInt][coluna] != '#') {
+                    if (matriz_escondida[linhaInt][coluna] != matriz_navios[linhaInt][coluna]) {
                         digitouCorreto = 1;
                     } else {
                         printf("VOCE JA SELECIONOU ESSA COORDENADA\n\n");
@@ -222,10 +257,10 @@ int main(void) {
 
             /*VERIFICA SE A POSICAO POSSUI NAVIO OU NAO*/
             if (matriz_padrao[linhaInt][coluna] == 0) {
-                matriz_escondida[linhaInt][coluna] = 'O';
+                matriz_escondida[linhaInt][coluna] = matriz_navios[linhaInt][coluna];
                 tentativas--;
             } else {
-                matriz_escondida[linhaInt][coluna] = '#';
+                matriz_escondida[linhaInt][coluna] = matriz_navios[linhaInt][coluna];
             }
 
             /*SUBSTITUI A POSICAO QUE O USUARIO DIGITOU POR 0*/
@@ -250,10 +285,19 @@ int main(void) {
             }
         }
 
+        printf("   0  1  2  3  4  5  6  7  8  9\n");
+        for(i = 0; i < 10; i++) {
+            printf("%c  ", i + 65);
+            for(j = 0; j < 10; j++) {
+                printf("%c  ", matriz_escondida[i][j]);
+            }
+            printf("\n");
+        }
+
         if (tentativas <= 0) {
-            printf("VOCE PERDEU!\n\n");
+            printf("\nVOCE PERDEU!\n\n");
         } else {
-            printf("PARABENS VOCE GANHOU!!!\n\n");
+            printf("\nPARABENS VOCE GANHOU!!!\n\n");
         }
 
         printf("Deseja jogar novamente? (s/n): ");
