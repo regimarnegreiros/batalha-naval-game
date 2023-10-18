@@ -190,7 +190,6 @@ int main(void) {
         }
 
         /*
-        */
         printf(" ");
         for(i = 0; i < 10; i++) {
             for(j = 0; j < 10; j++) {
@@ -208,6 +207,7 @@ int main(void) {
             printf("\n ");
         }
         printf("\n");
+        */
 
         char linha;
         int linhaInt, coluna, digitouCorreto, k, aindaTemNavio;
@@ -245,7 +245,7 @@ int main(void) {
                 linhaInt = linha - 'a';
 
                 if (linhaInt >= 0 && linhaInt <= 9 && coluna >= 0 && coluna <= 9) {
-                    // printf("\nVoce digitou corretamente\n\n");
+                    // digitou corretamente
                     if (matriz_escondida[linhaInt][coluna] != matriz_navios[linhaInt][coluna]) {
                         digitouCorreto = 1;
                     } else {
@@ -293,10 +293,12 @@ int main(void) {
             printf("\n");
         }
 
-        if (tentativas <= 0) {
+        if (naviosEliminados == 0) {
+            printf("\nVOCE NAO ELIMINOU NENHUM DOS %i NAVIOS!!!\n\n", numDoNavio);
+        } else if (tentativas <= 0) {
             printf("\nSUAS TENTATIVAS ACABARAM, VOCE ELIMINOU %i/%i NAVIOS!\n\n", naviosEliminados, numDoNavio);
         } else {
-            printf("\nPARABENS VOCE ELMINOU TODOS OS NAVIOS!!!\n\n");
+            printf("\nPARABENS VOCE ELMINOU TODOS OS %i NAVIOS!!!\n\n", numDoNavio);
         }
 
         printf("Deseja jogar novamente? (s/n): ");
