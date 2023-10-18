@@ -210,7 +210,7 @@ int main(void) {
         printf("\n");
 
         char linha;
-        int linhaInt, coluna, digitouCorreto, k, temTodosOsNaviosAinda;
+        int linhaInt, coluna, digitouCorreto, k, aindaTemNavio;
         char matriz_escondida[10][10];
         
         /*CRIA A MATRIZ ESCONDIDA*/
@@ -219,8 +219,10 @@ int main(void) {
                 matriz_escondida[i][j] = '.';
             }
         }
+        
+        int naviosEliminados = 0;
 
-        while(tentativas > 0) {
+        while(tentativas > 0 && naviosEliminados < numDoNavio) {
             printf("   0  1  2  3  4  5  6  7  8  9\n");
             for(i = 0; i < 10; i++) {
                 printf("%c  ", i + 65);
@@ -229,7 +231,8 @@ int main(void) {
                 }
                 printf("\n");
             }
-            printf("\nRestam %i tentativas\n\n", tentativas);
+            printf("\nTentativas restantes: %i\n", tentativas);
+            printf("Navios restantes: %i\n\n", numDoNavio - naviosEliminados);
             
             /*RECOLHE A CORDENADA DIGITADA PELO USUARIO*/
             digitouCorreto = 0;
@@ -256,32 +259,28 @@ int main(void) {
             }
 
             /*VERIFICA SE A POSICAO POSSUI NAVIO OU NAO*/
+            matriz_escondida[linhaInt][coluna] = matriz_navios[linhaInt][coluna];
             if (matriz_padrao[linhaInt][coluna] == 0) {
-                matriz_escondida[linhaInt][coluna] = matriz_navios[linhaInt][coluna];
                 tentativas--;
-            } else {
-                matriz_escondida[linhaInt][coluna] = matriz_navios[linhaInt][coluna];
             }
 
             /*SUBSTITUI A POSICAO QUE O USUARIO DIGITOU POR 0*/
             matriz_padrao[linhaInt][coluna] = 0;
 
             /*VERIFICA SE UM NAVIO FOI COMPLETAMENTE ELIMINADO*/
+            naviosEliminados = 0;
             for (k = 1; k <= numDoNavio; k++) {
-                temTodosOsNaviosAinda = 0;
+                aindaTemNavio = 0;
                 for(i = 0; i < 10; i++) {
                     for(j = 0; j < 10; j++) {
                         if (matriz_padrao[i][j] == k) {
-                            temTodosOsNaviosAinda = 1;
+                            aindaTemNavio = 1;
                         }
                     }
                 }
-                if (temTodosOsNaviosAinda == 0) {
-                    break;
+                if (aindaTemNavio == 0) {
+                    naviosEliminados++;
                 }
-            }
-            if (temTodosOsNaviosAinda == 0) {
-                break;
             }
         }
 
@@ -295,9 +294,9 @@ int main(void) {
         }
 
         if (tentativas <= 0) {
-            printf("\nVOCE PERDEU!\n\n");
+            printf("\nSUAS TENTATIVAS ACABARAM, VOCE ELIMINOU %i/%i NAVIOS!\n\n", naviosEliminados, numDoNavio);
         } else {
-            printf("\nPARABENS VOCE GANHOU!!!\n\n");
+            printf("\nPARABENS VOCE ELMINOU TODOS OS NAVIOS!!!\n\n");
         }
 
         printf("Deseja jogar novamente? (s/n): ");
