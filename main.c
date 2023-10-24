@@ -259,7 +259,7 @@ int main(void) {
         
         int naviosEliminados = 0;
 
-        while(tentativas > 0 && naviosEliminados < numDoNavio) {
+        do {
             system("cls");
             if (escolhaMenuDificuldade == 1) {
                 printf("\nVoce esta jogando na dificuldade FACIL.\n\n");
@@ -281,39 +281,6 @@ int main(void) {
             }
             printf("\nTentativas restantes: %i\n", tentativas);
             printf("Navios restantes: %i\n\n", numDoNavio - naviosEliminados);
-            
-            /*RECOLHE A CORDENADA DIGITADA PELO USUARIO*/
-            digitouCorreto = 0;
-            while(digitouCorreto == 0) {
-                printf("Insira uma letra de A a J e um numero de 0 a 9 (Ex: a1 ou A1):\n");
-                scanf(" %c%i", &linha, &coluna);
-                printf("\n");
-
-                linha = tolower(linha);
-                linhaInt = linha - 'a';
-
-                if (linhaInt >= 0 && linhaInt <= 9 && coluna >= 0 && coluna <= 9) {
-                    // digitou corretamente
-                    if (matriz_escondida[linhaInt][coluna] != matriz_navios[linhaInt][coluna]) {
-                        digitouCorreto = 1;
-                    } else {
-                        printf("VOCE JA SELECIONOU ESSA COORDENADA\n\n");
-                        while (getchar() != '\n');
-                    }
-                } else {
-                    printf("VOCE DIGITOU INCORRETAMENTE!\n\n");
-                    while (getchar() != '\n');
-                }
-            }
-
-            /*VERIFICA SE A POSICAO POSSUI NAVIO OU NAO*/
-            matriz_escondida[linhaInt][coluna] = matriz_navios[linhaInt][coluna];
-            if (matriz_padrao[linhaInt][coluna] == 0) {
-                tentativas--;
-            }
-
-            /*SUBSTITUI A POSICAO QUE O USUARIO DIGITOU POR 0*/
-            matriz_padrao[linhaInt][coluna] = 0;
 
             /*VERIFICA SE UM NAVIO FOI COMPLETAMENTE ELIMINADO*/
             naviosEliminados = 0;
@@ -330,24 +297,50 @@ int main(void) {
                     naviosEliminados++;
                 }
             }
-        }
+            
+            if (tentativas > 0 && naviosEliminados < numDoNavio) {
+                /*RECOLHE A CORDENADA DIGITADA PELO USUARIO*/
+                digitouCorreto = 0;
+                while(digitouCorreto == 0) {
+                    printf("Insira uma letra de A a J e um numero de 0 a 9 (Ex: a1 ou A1):\n");
+                    scanf(" %c%i", &linha, &coluna);
+                    printf("\n");
 
-        system("cls");
-        printf("   0  1  2  3  4  5  6  7  8  9\n");
-        for(i = 0; i < 10; i++) {
-            printf("%c  ", i + 65);
-            for(j = 0; j < 10; j++) {
-                printf("%c  ", matriz_escondida[i][j]);
+                    linha = tolower(linha);
+                    linhaInt = linha - 'a';
+
+                    if (linhaInt >= 0 && linhaInt <= 9 && coluna >= 0 && coluna <= 9) {
+                        // digitou corretamente
+                        if (matriz_escondida[linhaInt][coluna] != matriz_navios[linhaInt][coluna]) {
+                            digitouCorreto = 1;
+                        } else {
+                            printf("VOCE JA SELECIONOU ESSA COORDENADA\n\n");
+                            while (getchar() != '\n');
+                        }
+                    } else {
+                        printf("VOCE DIGITOU INCORRETAMENTE!\n\n");
+                        while (getchar() != '\n');
+                    }
+                }
+
+                /*VERIFICA SE A POSICAO POSSUI NAVIO OU NAO*/
+                matriz_escondida[linhaInt][coluna] = matriz_navios[linhaInt][coluna];
+                if (matriz_padrao[linhaInt][coluna] == 0) {
+                    tentativas--;
+                }
+
+                /*SUBSTITUI A POSICAO QUE O USUARIO DIGITOU POR 0*/
+                matriz_padrao[linhaInt][coluna] = 0;
             }
-            printf("\n");
-        }
+
+        } while (tentativas > 0 && naviosEliminados < numDoNavio);
 
         if (naviosEliminados == 0) {
-            printf("\nVOCE NAO ELIMINOU NENHUM DOS %i NAVIOS!!!\n\n", numDoNavio);
+            printf("VOCE NAO ELIMINOU NENHUM DOS %i NAVIOS!!!\n\n", numDoNavio);
         } else if (tentativas <= 0) {
-            printf("\nSUAS TENTATIVAS ACABARAM, VOCE ELIMINOU %i/%i NAVIOS!\n\n", naviosEliminados, numDoNavio);
+            printf("SUAS TENTATIVAS ACABARAM, VOCE ELIMINOU %i/%i NAVIOS!\n\n", naviosEliminados, numDoNavio);
         } else {
-            printf("\nPARABENS VOCE ELMINOU TODOS OS %i NAVIOS!!!\n\n", numDoNavio);
+            printf("PARABENS VOCE ELMINOU TODOS OS %i NAVIOS!!!\n\n", numDoNavio);
         }
 
         printf("Pressione enter para voltar ao menu principal.\n");
