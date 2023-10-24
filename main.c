@@ -4,55 +4,92 @@
 #include <ctype.h>
 
 int main(void) {
-    char jogarNovamente;
-    do {
+
+    while (1) {
+        system("cls");
         /*MENU*/
         int dificuldade, tentativas;
         int qNavio[5];
         int menu = 0;
+        int escolhaMenu = 0;
+        int escolhaMenuDificuldade = 0;
         while (menu == 0) {
             printf("\nBem-vindo ao jogo de batalha naval!\n\n");
-            printf("Selecione uma dificuldade abaixo:\n1 - Facil\n2 - Medio\n3 - Dificil\n\nDigite Aqui: ");
-            scanf("%i", &dificuldade);
-            
-            switch (dificuldade) {
-                case 1: // facil
-                    printf("\nVoce selecionou a dificuldade facil!\n\n");
-                    qNavio[4] = 3;
-                    qNavio[3] = 3;
-                    qNavio[2] = 3;
-                    qNavio[1] = 3;
-                    qNavio[0] = 3;
-                    tentativas = 9;
+            printf("1. Jogar\n2. Creditos\n3. Sair\n\nEscolha uma opcao: ");
+            scanf("%i", &escolhaMenu);
 
-                    menu = 1;
+            switch(escolhaMenu) {
+                case 1:
+                    system("cls");
+                    escolhaMenuDificuldade = 0;
+                    while(escolhaMenuDificuldade == 0) {
+                        printf("\nSelecione uma dificuldade abaixo:\n\n1. Facil\n2. Medio\n3. Dificil\n\n4. Voltar para o menu principal\n\nEscolha uma opcao: ");
+                        scanf("%i", &dificuldade);
+                        
+                        switch (dificuldade) {
+                            case 1: // facil
+                                printf("\nVoce selecionou a dificuldade facil!\n\n");
+                                qNavio[4] = 3;
+                                qNavio[3] = 3;
+                                qNavio[2] = 3;
+                                qNavio[1] = 3;
+                                qNavio[0] = 3;
+                                tentativas = 9;
+
+                                menu = 1;
+                                escolhaMenuDificuldade = 1;
+                                break;
+                            case 2: // medio
+                                printf("\nVoce selecionou a dificuldade media!\n\n");
+                                qNavio[4] = 2;
+                                qNavio[3] = 2;
+                                qNavio[2] = 2;
+                                qNavio[1] = 2;
+                                qNavio[0] = 2;
+                                tentativas = 6;
+                                
+                                menu = 1;
+                                escolhaMenuDificuldade = 2;
+                                break;
+                            case 3: // dificil
+                                printf("\nVoce selecionou a dificuldade DIFICIL!\n\n");
+                                qNavio[4] = 1;
+                                qNavio[3] = 1;
+                                qNavio[2] = 1;
+                                qNavio[1] = 1;
+                                qNavio[0] = 1;
+                                tentativas = 3;
+                                
+                                menu = 1;
+                                escolhaMenuDificuldade = 3;
+                                break;
+                            case 4: // menu principal
+                                escolhaMenuDificuldade = 4;
+                                system("cls");
+                                break;
+                            default:
+                                system("cls");
+                                printf("\nOpcao invalida. Tente novamente!\n");
+                                while (getchar() != '\n');
+                        }
+                    }
                     break;
-                case 2: // medio
-                    printf("\nVoce selecionou a dificuldade media!\n\n");
-                    qNavio[4] = 2;
-                    qNavio[3] = 2;
-                    qNavio[2] = 2;
-                    qNavio[1] = 2;
-                    qNavio[0] = 2;
-                    tentativas = 6;
-                    
-                    menu = 1;
+                case 2:
+                    system("cls");
+                    printf("Desenvolvido por: Regimar de Deus Negreiros\n\n");
+                    printf("Pressione enter para voltar ao menu principal.\n");
+                    getchar();
+                    getchar();
+                    system("cls");
                     break;
-                case 3: // dificil
-                    printf("\nVoce selecionou a dificuldade DIFICIL!\n\n");
-                    qNavio[4] = 1;
-                    qNavio[3] = 1;
-                    qNavio[2] = 1;
-                    qNavio[1] = 1;
-                    qNavio[0] = 1;
-                    tentativas = 3;
-                    
-                    menu = 1;
-                    break;
+                case 3:
+                    return 0;
                 default:
-                    printf("OPCAO INVAILIDA!!!");
+                    system("cls");
+                    printf("\nOpcao invalida. Tente novamente!\n");
                     while (getchar() != '\n');
             }
+
         }
 
 
@@ -71,7 +108,7 @@ int main(void) {
 
         for(i = 0; i < 10; i++) {
             for(j = 0; j < 10; j++) {
-                matriz_navios[i][j] = '~';
+                matriz_navios[i][j] = 'O';
             } 
         }
 
@@ -216,13 +253,24 @@ int main(void) {
         /*CRIA A MATRIZ ESCONDIDA*/
         for(i = 0; i < 10; i++) {
             for(j = 0; j < 10; j++) {
-                matriz_escondida[i][j] = '.';
+                matriz_escondida[i][j] = '*';
             }
         }
         
         int naviosEliminados = 0;
 
         while(tentativas > 0 && naviosEliminados < numDoNavio) {
+            system("cls");
+            if (escolhaMenuDificuldade == 1) {
+                printf("\nVoce esta jogando na dificuldade FACIL.\n\n");
+            } else if (escolhaMenuDificuldade == 2) {
+                printf("\nVoce esta jogando na dificuldade MEDIA.\n\n");
+            } else if (escolhaMenuDificuldade == 3) {
+                printf("\nVoce esta jogando na dificuldade DIFICIL.\n\n");
+            } else {
+                printf("\nErro na escolha de dificuldade!\n\n");
+            }
+
             printf("   0  1  2  3  4  5  6  7  8  9\n");
             for(i = 0; i < 10; i++) {
                 printf("%c  ", i + 65);
@@ -284,6 +332,7 @@ int main(void) {
             }
         }
 
+        system("cls");
         printf("   0  1  2  3  4  5  6  7  8  9\n");
         for(i = 0; i < 10; i++) {
             printf("%c  ", i + 65);
@@ -301,11 +350,10 @@ int main(void) {
             printf("\nPARABENS VOCE ELMINOU TODOS OS %i NAVIOS!!!\n\n", numDoNavio);
         }
 
-        printf("Deseja jogar novamente? (s/n): ");
-        scanf(" %c", &jogarNovamente);
-        while (getchar() != '\n');
-        
-    } while (jogarNovamente == 's' || jogarNovamente == 'S');
+        printf("Pressione enter para voltar ao menu principal.\n");
+        getchar();
+        getchar();
+    }
 
     return 0;
 }
