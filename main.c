@@ -28,7 +28,6 @@ int main(void) {
                         
                         switch (dificuldade) {
                             case 1: // facil
-                                printf("\nVoce selecionou a dificuldade facil!\n\n");
                                 qNavio[4] = 3;
                                 qNavio[3] = 3;
                                 qNavio[2] = 3;
@@ -40,7 +39,6 @@ int main(void) {
                                 escolhaMenuDificuldade = 1;
                                 break;
                             case 2: // medio
-                                printf("\nVoce selecionou a dificuldade media!\n\n");
                                 qNavio[4] = 2;
                                 qNavio[3] = 2;
                                 qNavio[2] = 2;
@@ -52,7 +50,6 @@ int main(void) {
                                 escolhaMenuDificuldade = 2;
                                 break;
                             case 3: // dificil
-                                printf("\nVoce selecionou a dificuldade DIFICIL!\n\n");
                                 qNavio[4] = 1;
                                 qNavio[3] = 1;
                                 qNavio[2] = 1;
@@ -244,6 +241,8 @@ int main(void) {
             printf("\n ");
         }
         printf("\n");
+        getchar();
+        getchar();
         */
 
         char linha;
@@ -257,7 +256,9 @@ int main(void) {
             }
         }
         
-        int naviosEliminados = 0;
+        int naviosEliminados = -1;
+        int tentativasAnterior = -1;
+        int naviosEliminadosAnterior = -1;
 
         do {
             system("cls");
@@ -283,6 +284,7 @@ int main(void) {
             printf("Navios restantes: %i\n\n", numDoNavio - naviosEliminados);
 
             /*VERIFICA SE UM NAVIO FOI COMPLETAMENTE ELIMINADO*/
+            naviosEliminadosAnterior = naviosEliminados;
             naviosEliminados = 0;
             for (k = 1; k <= numDoNavio; k++) {
                 aindaTemNavio = 0;
@@ -296,6 +298,20 @@ int main(void) {
                 if (aindaTemNavio == 0) {
                     naviosEliminados++;
                 }
+            }
+            
+            if (tentativas == 0) {
+                tentativas--;
+            }
+
+            if (tentativasAnterior == -1 && naviosEliminadosAnterior == -1) {
+                printf("Essa e sua primeira jogada!\n\n");
+            } else if (tentativasAnterior > tentativas) {
+                printf("Voce acertou na agua!\n\n");
+            } else if (naviosEliminadosAnterior < naviosEliminados) {
+                printf("Voce eliminou um navio por completo!\n\n");
+            } else {
+                printf("Voce acertou uma parte de um navio\n\n");
             }
             
             if (tentativas > 0 && naviosEliminados < numDoNavio) {
@@ -325,6 +341,7 @@ int main(void) {
 
                 /*VERIFICA SE A POSICAO POSSUI NAVIO OU NAO*/
                 matriz_escondida[linhaInt][coluna] = matriz_navios[linhaInt][coluna];
+                tentativasAnterior = tentativas;
                 if (matriz_padrao[linhaInt][coluna] == 0) {
                     tentativas--;
                 }
@@ -333,7 +350,7 @@ int main(void) {
                 matriz_padrao[linhaInt][coluna] = 0;
             }
 
-        } while (tentativas > 0 && naviosEliminados < numDoNavio);
+        } while (tentativas > -1 && naviosEliminados < numDoNavio);
 
         if (naviosEliminados == 0) {
             printf("VOCE NAO ELIMINOU NENHUM DOS %i NAVIOS!!!\n\n", numDoNavio);
