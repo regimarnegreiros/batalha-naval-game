@@ -261,6 +261,23 @@ int main(void) {
         int naviosEliminadosAnterior = -1;
 
         do {
+            /*VERIFICA SE UM NAVIO FOI COMPLETAMENTE ELIMINADO*/
+            naviosEliminadosAnterior = naviosEliminados;
+            naviosEliminados = 0;
+            for (k = 1; k <= numDoNavio; k++) {
+                aindaTemNavio = 0;
+                for(i = 0; i < 10; i++) {
+                    for(j = 0; j < 10; j++) {
+                        if (matriz_padrao[i][j] == k) {
+                            aindaTemNavio = 1;
+                        }
+                    }
+                }
+                if (aindaTemNavio == 0) {
+                    naviosEliminados++;
+                }
+            }
+            
             system("cls");
             if (escolhaMenuDificuldade == 1) {
                 printf("\nVoce esta jogando na dificuldade FACIL.\n\n");
@@ -283,22 +300,6 @@ int main(void) {
             printf("\nTentativas restantes: %i\n", tentativas);
             printf("Navios restantes: %i\n\n", numDoNavio - naviosEliminados);
 
-            /*VERIFICA SE UM NAVIO FOI COMPLETAMENTE ELIMINADO*/
-            naviosEliminadosAnterior = naviosEliminados;
-            naviosEliminados = 0;
-            for (k = 1; k <= numDoNavio; k++) {
-                aindaTemNavio = 0;
-                for(i = 0; i < 10; i++) {
-                    for(j = 0; j < 10; j++) {
-                        if (matriz_padrao[i][j] == k) {
-                            aindaTemNavio = 1;
-                        }
-                    }
-                }
-                if (aindaTemNavio == 0) {
-                    naviosEliminados++;
-                }
-            }
             
             if (tentativas == 0) {
                 tentativas--;
