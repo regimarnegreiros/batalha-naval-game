@@ -7,7 +7,7 @@ Batalha Naval Game é um jogo singleplayer desenvolvido em C, onde você assume 
 Para começar a jogar Batalha Naval Game, siga os passos abaixo:
 
 1. **Download do Jogo**
-   - Acesse a pasta "output" deste repositório.
+   - Acesse a pasta "(output/)" deste repositório.
    - Faça o download do arquivo "main.exe" disponível na pasta.
 
 2. **Requisitos do Sistema**
